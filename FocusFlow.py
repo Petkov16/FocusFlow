@@ -39,7 +39,13 @@ class TimeManagementApp:
 
         self.start_timer_button = tk.Button(button_frame, text="Start Timer", font=("Helvetica", 12), width=10, command=self.start_timer, bg="#2196F3", fg="#FFF", relief="solid")
         self.start_timer_button.grid(row=0, column=0, padx=5)
+        
+        self.stop_timer_button = tk.Button(button_frame, text="Stop Timer", font=("Helvetica", 12), width=10, command=self.stop_timer, bg="#FFC107", fg="#333", relief="solid")
+        self.stop_timer_button.grid(row=0, column=1, padx=5)
 
+        self.reset_timer_button = tk.Button(button_frame, text="Reset Timer", font=("Helvetica", 12), width=10, command=self.reset_timer, bg="#FF5722", fg="#FFF", relief="solid")
+        self.reset_timer_button.grid(row=0, column=2, padx=5)
+        
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def add_task(self):
@@ -67,7 +73,15 @@ class TimeManagementApp:
     def update_timer_label(self):
         minutes, seconds = divmod(self.time_left, 60)
         self.timer_label.config(text=f"Pomodoro Timer ({minutes:02}:{seconds:02})")
+        
+    def stop_timer(self):
+        self.timer_running = False
 
+    def reset_timer(self):
+        self.timer_running = False
+        self.time_left = 25 * 60
+        self.update_timer_label()
+        
     def countdown(self):
         if self.timer_running:
             if self.time_left > 0:
